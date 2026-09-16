@@ -1,9 +1,8 @@
 // src\main.rs
 use windows::{
-    core::*,
-    Foundation::Uri,
-    Web::Syndication::SyndicationClient
+    Foundation::Uri, Web::Syndication::SyndicationClient, Win32::UI::WindowsAndMessaging::{MB_OK, MessageBoxW}, core::*
 };
+
 
 
 // Observe que el tipo de valor devuelto de la función main es un resultado, de windows::core::. Esto hará que las cosas sean más fáciles, ya que es habitual tratar los errores de las API del sistema operativo (SO). windows::core::Result nos ayuda con la propagación de errores y con una administración concisa de los mismos.
@@ -23,10 +22,29 @@ fn main() -> windows::core::Result<()> {
 
     let feed = client.RetrieveFeedAsync(&uri)?.join()?;
 
-    for item in feed.Items()? {
-        println!("{}", item.Title()?.Text()?);
-    }
+    print_feed(&feed)?;
 
     Ok(())
 
+}
+
+fn print_feed(
+    feed: &windows::Web::Syndication::SyndicationFeed,
+) -> windows::core::Result<()> {
+    unsafe {
+        for item in feed.Items()? {
+            let title = item.Title()?.Text()?;
+
+            println!("{title}");
+
+            MessageBoxW(
+                None,
+                PCWSTR(title.as_ptr()),
+                h!("RSS Reader"),
+                MB_OK,
+            );
+        }
+    }
+
+    Ok(())
 }
