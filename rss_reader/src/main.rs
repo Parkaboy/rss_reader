@@ -1,4 +1,3 @@
-// src\main.rs
 use windows::{
     Foundation::Uri, Web::Syndication::SyndicationClient, core::*
 };
@@ -18,9 +17,7 @@ fn main() -> windows::core::Result<()> {
     let uri = Uri::CreateUri(h!("https://blogs.windows.com/feed/"))?;
     let client = SyndicationClient::new()?;
 
-    let feed = get_feed(&client, &uri)?;
-
-    print_feed(&feed)?;
+    print_feed(&get_feed(&client, &uri)?)?;
 
     Ok(())
 
