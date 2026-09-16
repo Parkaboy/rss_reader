@@ -13,15 +13,15 @@ fn main() -> windows::core::Result<()> {
     // Observe también la macro h! del crate windows. Se usa para construir una referencia a HSTRING a partir de un literal de cadena de Rust. La API de WinRT utiliza extensamente HSTRING para los valores de cadena.
 
 
-    let uri = Uri::CreateUri(h!("https://blogs.windows.com/feed"))?;
+    let uri = Uri::CreateUri(h!("https://blogs.windows.com/feed/"))?;
     let client = SyndicationClient::new()?;
 
     client.SetRequestHeader(
         h!("User-Agent"),
-        h!("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)"),
+        h!("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/140.0 Safari/537.36"),
     )?;
 
-    let feed = client.RetrieveFeedAsync(&uri)?.get()?;
+    let feed = client.RetrieveFeedAsync(&uri)?.join()?;
 
     for item in feed.Items()? {
         println!("{}", item.Title()?.Text()?);
