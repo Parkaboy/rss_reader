@@ -15,7 +15,7 @@ fn main() -> windows::core::Result<()> {
     let uri = Uri::CreateUri(h!("https://blogs.windows.com/feed/"))?;
     let client = SyndicationClient::new()?;
 
-    let feed = getFeed(&client, &uri)?;
+    let feed = get_feed(&client, &uri)?;
 
     print_feed(&feed)?;
 
@@ -24,7 +24,7 @@ fn main() -> windows::core::Result<()> {
 }
 
 
-fn getFeed(client: &SyndicationClient, uri: &Uri) -> windows::core::Result<windows::Web::Syndication::SyndicationFeed> {
+fn get_feed(client: &SyndicationClient, uri: &Uri) -> windows::core::Result<windows::Web::Syndication::SyndicationFeed> {
 
     client.SetRequestHeader(
         h!("User-Agent"),
