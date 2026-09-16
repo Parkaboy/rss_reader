@@ -8,4 +8,6 @@ version = "0.62.2"
 features = [
     "Foundation_Collections",
     "Web_Syndication",
+    "Win32_Foundation",
+     "Win32_UI_WindowsAndMessaging",
 ]
