@@ -2,6 +2,8 @@ use windows::{
     Foundation::Uri, Web::Syndication::SyndicationClient, core::*
 };
 mod helper;
+#[cfg(test)]
+mod tests;
 use crate::helper::get_feed;
 use crate::helper::print_feed;
 
